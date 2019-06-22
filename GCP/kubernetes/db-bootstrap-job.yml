@@ -1,0 +1,30 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "db-populate-notejam"
+  namespace: "notejam"
+spec:
+  template:
+    metadata:
+      labels:
+        app: "notejam-db"
+    spec:
+      containers:
+      - name: "notejam"
+        env:
+          - name: SQL_PW
+            valueFrom:
+              secretKeyRef:
+                name: sql-pw
+                key: password
+          - name: SQL_USER
+            valueFrom:
+              secretKeyRef:
+                name: sql-pw
+                key: user
+          - name: CLOUDSQL_HOST
+            value: "35.187.173.150"
+        imagePullPolicy: Always
+        image: "gcr.io/named-messenger-197415/notejam:master"
+        command: ["python", "db.py"]
+      restartPolicy: OnFailure

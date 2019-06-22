@@ -1,0 +1,47 @@
+steps:
+- name: 'gcr.io/cloud-builders/git'
+  args: ['clone', 'https://source.developers.google.com/p/named-messenger-197415/r/notejam']
+  id: Fetch source
+- name: python:2.7-alpine
+  id: Test
+  entrypoint: /bin/sh
+  args:
+    - -c
+    - 'pip install -r flask/requirements.txt && python flask/tests.py'
+  env:
+    - 'SQL_PW=none'
+    - 'CLOUDSQL_HOST=none'
+    - 'SQL_USER=none'
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/named-messenger-197415/notejam:$COMMIT_SHA', '.']
+  id: Build
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/named-messenger-197415/notejam:$COMMIT_SHA']
+  id: Push
+- name: 'gcr.io/cloud-builders/curl'
+  args:
+    - ifconfig.co
+    - -o
+    - buildIP.txt
+  id: GetIP
+- name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: sh
+  args: ['-c', 'gcloud container clusters update notejam --zone europe-west1 --enable-master-authorized-networks --master-authorized-networks 62.84.193.138/32,$(cat buildIP.txt)/32']
+  id: Whitelist
+- name: 'gcr.io/cloud-builders/kubectl'
+  args:
+    - -n
+    - notejam
+    - set
+    - image
+    - deployment
+    - notejam
+    - notejam=gcr.io/named-messenger-197415/notejam:$COMMIT_SHA
+  env:
+    - 'CLOUDSDK_COMPUTE_ZONE=europe-west1'
+    - 'CLOUDSDK_CONTAINER_CLUSTER=notejam'
+  id: Deploy
+- name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: sh
+  args: ['-c', 'gcloud container clusters update notejam --zone europe-west1 --enable-master-authorized-networks --master-authorized-networks 62.84.193.138/32']
+  id: UnWhitelist
