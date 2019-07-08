@@ -11,7 +11,10 @@ pipeline {
   stages {
     stage('Test') {
       agent {
-        docker { image 'python:2.7' }
+        docker {
+          image 'python:2.7'
+          args '--tmpfs /.config'
+        }
       }
       steps {
         sh 'pip install -r flask/requirements.txt && python flask/tests.py'
