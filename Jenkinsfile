@@ -13,7 +13,7 @@ pipeline {
       agent {
         docker {
           image 'python:2.7'
-          args '--tmpfs /.config'
+          args '-u root:root'
         }
       }
       steps {
