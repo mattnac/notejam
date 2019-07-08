@@ -16,10 +16,5 @@ pipeline {
         sh 'pip install -r flask/requirements.txt -t lib && python flask/tests.py'
       }
     }
-    stage('Build') {
-      steps {
-
-      }
-    }
   }
 }
