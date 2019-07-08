@@ -2,7 +2,9 @@ node {
   checkout scm
 }
 pipeline {
-  agent any
+  agent {
+    docker { image 'python2.7' }
+  }
   environment {
     SQL_USER = 'None'
     SQL_PW = 'None'
@@ -12,6 +14,11 @@ pipeline {
     stage('Test') {
       steps {
         sh 'pip install -r flask/requirements.txt -t lib && python flask/tests.py'
+      }
+    }
+    stage('Build') {
+      steps {
+
       }
     }
   }
