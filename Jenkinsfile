@@ -2,7 +2,7 @@ node {
   checkout scm
 }
 pipeline {
-  agent none
+  agent any
   environment {
     SQL_USER = 'None'
     SQL_PW = 'None'
@@ -20,7 +20,11 @@ pipeline {
         sh 'pip install -r flask/requirements.txt && python flask/tests.py'
       }
     stage('Build') {
-      agent any
+      agent {
+        docker {
+          image 'python:2.7'
+          args '-u root:root'
+        }
       steps {
         sh 'docker build -t notejam .'
       }
