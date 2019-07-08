@@ -9,7 +9,7 @@ node {
   }
   stage('Test') {
     app.inside {
-      sh '-c /usr/local/bin/python tests.py'
+      sh '/usr/local/bin/python tests.py'
     }
   }
 }
