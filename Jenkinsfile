@@ -1,5 +1,6 @@
 node {
   checkout scm
+  def dockerIma
 }
 pipeline {
   agent {
@@ -21,7 +22,7 @@ pipeline {
     }
     stage('Build') {
       steps {
-        sh 'docker build -t notejam .'
+        docker.build("notejam:$env.BUILD_ID")
       }
     }
     }
