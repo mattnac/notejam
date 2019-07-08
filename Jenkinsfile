@@ -26,6 +26,7 @@ pipeline {
           image 'python:2.7'
           args '-u root:root'
         }
+      }
       steps {
         sh 'docker build -t notejam .'
       }
