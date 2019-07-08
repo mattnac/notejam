@@ -5,7 +5,7 @@ node {
     checkout scm
   }
   stage('Build Image') {
-    app = docker.build('notejam')
+    app = docker.build('mattiasdahlgren/notejam')
   }
   stage('Test') {
     withEnv(['CLOUDSQL_HOST=none', 'SQL_USER=none', 'SQL_PW=none']) {
