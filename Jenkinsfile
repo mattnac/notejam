@@ -3,7 +3,7 @@ node {
 }
 pipeline {
   agent {
-    docker { image 'python2.7' }
+    docker { image 'python:2.7' }
   }
   environment {
     SQL_USER = 'None'
