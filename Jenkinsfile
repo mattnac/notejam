@@ -19,6 +19,7 @@ pipeline {
       steps {
         sh 'pip install -r flask/requirements.txt && python flask/tests.py'
       }
+    }
     stage('Build') {
       agent {
         docker {
