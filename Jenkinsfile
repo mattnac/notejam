@@ -8,8 +8,10 @@ node {
     app = docker.build('notejam')
   }
   stage('Test') {
-    app.inside {
-      sh '/usr/local/bin/python flask/tests.py'
+    withEnv(['CLOUDSQL_HOST=none', 'SQL_USER=none', 'SQL_PW=none']) {
+      app.inside {
+        sh '/usr/local/bin/python flask/tests.py'
+      }
     }
   }
 }
