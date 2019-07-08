@@ -6,7 +6,7 @@ pipeline {
   stages {
     stage('Test') {
       steps {
-        sh '-c pip install -r flask/requirements -txt && python flask/tests.py'
+        sh 'pip install -r flask/requirements -txt && python flask/tests.py'
       }
     }
   }
