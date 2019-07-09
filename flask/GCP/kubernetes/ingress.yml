@@ -1,0 +1,11 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  namespace: "notejam"
+  name: "notejam-incoming"
+spec:
+  tls:
+  - secretName: ingress-crt-key
+  backend:
+    serviceName: "notejam"
+    servicePort: 80

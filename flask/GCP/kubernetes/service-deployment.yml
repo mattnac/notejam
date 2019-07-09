@@ -1,0 +1,42 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: "notejam"
+  namespace: "notejam"
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: "notejam"
+    spec:
+      containers:
+      - name: "notejam"
+        imagePullPolicy: Always
+        image: "gcr.io/named-messenger-197415/notejam:master"
+        env:
+          - name: SQL_PW
+            valueFrom:
+              secretKeyRef:
+                name: sql-pw
+                key: password
+          - name: SQL_USER
+            valueFrom:
+              secretKeyRef:
+                name: sql-pw
+                key: user
+          - name: CLOUDSQL_HOST
+            value: "35.187.173.150"
+        ports:
+          - containerPort: 5000
+        livenessProbe:
+          httpGet:
+            path: /signin/
+            port: 5000
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /signin/
+            port: 5000
+          initialDelaySeconds: 3
+          periodSeconds: 3
