@@ -23,6 +23,7 @@ node {
   stage('Authenticate k8s') {
     withCredentials([file(credentialsId: 'bookshelf-k8s-key', variable: 'GCE_ACCOUNT')]) {
       withEnv(['GOOGLE_APPLICATION_CREDENTIALS=$GCE_ACCOUNT']) {
+        sh 'echo $GOOGLE_APPLICATION_CREDENTIALS'
         sh 'gcloud container clusters get-credentials demo-cluster --zone us-central1-a'
       }
     }
