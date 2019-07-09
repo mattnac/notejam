@@ -22,10 +22,8 @@ node {
   }
   stage('Authenticate k8s') {
     withCredentials([file(credentialsId: 'bookshelf-k8s-key', variable: 'GCE_ACCOUNT')]) {
-      gcloud = docker.image('gcr.io/cloud-builders/gcloud').withRun('-v $GCE_ACCOUNT:/gce-svc-acc')
-      withEnv(['GOOGLE_APPLICATION_CREDENTIALS=/gce-svc-acc']) {
+      gcloud = docker.image('gcr.io/cloud-builders/gcloud').withRun('-e GOOGLE_APPLICATION_CREDENTIALS=$GCE_ACCOUNT')
         gcloud.inside('gcloud container clusters get-credentials demo-cluster --zone us-central1-a')
-      }
     }
   }
 }
