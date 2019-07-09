@@ -28,6 +28,7 @@ node {
   stage('Deploy service') {
     withCredentials([file(credentialsId: 'bookshelf-k8s-key', variable: 'GCE_ACCOUNT')]) {
       sh 'export GOOGLE_APPLICATION_CREDENTIALS=$GCE_ACCOUNT'
+      sh 'ls'
       sh 'kubectl apply -f flask/GCP/ns.yml'
       sh 'kubectl apply -f flask/GCP/service-deployment-yml'
       sh 'kubectl apply -f flask/GCP/db-bootstrap-job.yml'
