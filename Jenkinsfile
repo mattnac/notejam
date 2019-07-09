@@ -30,7 +30,7 @@ node {
       sh 'export GOOGLE_APPLICATION_CREDENTIALS=$GCE_ACCOUNT'
       sh 'ls'
       sh 'kubectl apply -f flask/GCP/kubernetes/ns.yml'
-      sh 'kubectl apply -f flask/GCP/kubernetes/service-deployment-yml'
+      sh 'kubectl apply -f flask/GCP/kubernetes/service-deployment.yml'
       sh 'kubectl apply -f flask/GCP/kubernetes/db-bootstrap-job.yml'
       sh 'kubectl apply -f flask/GCP/kubernetes/service.yml'
       sh 'kubectl apply -f flask/GCP/kubernetes/ingress.yml'
