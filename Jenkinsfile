@@ -1,6 +1,5 @@
 node {
   checkout scm
-  def dockerImage
   stage('Clone repo') {
     checkout scm
   }
@@ -30,5 +29,6 @@ node {
     withCredentials([file(credentialsId: 'bookshelf-k8s-key', variable: 'GCE_ACCOUNT')]) {
       sh 'export GOOGLE_APPLICATION_CREDENTIALS=$GCE_ACCOUNT'
       sh 'kubect apply -f flask/GCP/'
+  }
   }
 }
