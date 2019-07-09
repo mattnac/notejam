@@ -29,11 +29,11 @@ node {
     withCredentials([file(credentialsId: 'bookshelf-k8s-key', variable: 'GCE_ACCOUNT')]) {
       sh 'export GOOGLE_APPLICATION_CREDENTIALS=$GCE_ACCOUNT'
       sh 'ls'
-      sh 'kubectl apply -f flask/GCP/ns.yml'
-      sh 'kubectl apply -f flask/GCP/service-deployment-yml'
-      sh 'kubectl apply -f flask/GCP/db-bootstrap-job.yml'
-      sh 'kubectl apply -f flask/GCP/service.yml'
-      sh 'kubectl apply -f flask/GCPingress.yml'
+      sh 'kubectl apply -f flask/GCP/kubernetes/ns.yml'
+      sh 'kubectl apply -f flask/GCP/kubernetes/service-deployment-yml'
+      sh 'kubectl apply -f flask/GCP/kubernetes/db-bootstrap-job.yml'
+      sh 'kubectl apply -f flask/GCP/kubernetes/service.yml'
+      sh 'kubectl apply -f flask/GCP/kubernetes/ingress.yml'
   }
   }
 }
