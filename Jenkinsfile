@@ -26,4 +26,9 @@ node {
       sh 'gcloud container clusters get-credentials demo-cluster --zone us-central1-a'
     }
   }
+  stage('Deploy service') {
+    withCredentials([file(credentialsId: 'bookshelf-k8s-key', variable: 'GCE_ACCOUNT')]) {
+      sh 'export GOOGLE_APPLICATION_CREDENTIALS=$GCE_ACCOUNT'
+      sh 'kubect apply -f flask/GCP/'
+  }
 }
