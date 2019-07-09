@@ -13,7 +13,7 @@ spec:
       containers:
       - name: "notejam"
         imagePullPolicy: Always
-        image: "gcr.io/named-messenger-197415/notejam:master"
+        image: "mattiasdahlgren/notejam:latest"
         env:
           - name: SQL_PW
             valueFrom:
