@@ -25,6 +25,6 @@ spec:
           - name: CLOUDSQL_HOST
             value: "35.187.173.150"
         imagePullPolicy: Always
-        image: "gcr.io/named-messenger-197415/notejam:master"
+        image: "mattiasdahlgren/notejam:latest"
         command: ["python", "db.py"]
       restartPolicy: OnFailure
