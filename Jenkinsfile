@@ -28,7 +28,7 @@ node {
   stage('Deploy service') {
     withCredentials([file(credentialsId: 'bookshelf-k8s-key', variable: 'GCE_ACCOUNT')]) {
       sh 'export GOOGLE_APPLICATION_CREDENTIALS=$GCE_ACCOUNT'
-      sh 'kubectl -n notejam --record deployment.apps/notejam set image deployment.apps/notejam notejam=notejam:latest'
+      sh 'kubectl -n notejam --record deployment.apps/notejam set image deployment.apps/notejam notejam=mattiasdahlgren/notejam:latest'
   }
   }
 }
